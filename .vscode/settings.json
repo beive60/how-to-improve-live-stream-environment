@@ -1,0 +1,17 @@
+{
+  "cSpell.words": [
+    "ASIO",
+    "Elgato",
+    "Lioran",
+    "LUFS",
+    "RTMPS",
+    "Sidechain",
+    "Speedify",
+    "Tascam",
+    "Traceroute",
+    "VICON"
+  ],
+  "markdownlint.config": {
+    "MD024": false
+  }
+}

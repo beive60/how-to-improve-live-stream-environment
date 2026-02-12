@@ -1,0 +1,17 @@
+# Production data directories
+# Binary files (video, audio recordings, raw captures) are stored locally only.
+# These are not version-controlled due to file size.
+production/*/data/
+
+# Common binary formats (safety net for files placed outside data/)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.flv
+*.webm
+*.wav
+*.flac
+*.aif
+*.aiff
