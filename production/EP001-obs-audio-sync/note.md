@@ -41,50 +41,66 @@
 
 ---
 
-## Data
+## 実験ノート
 
-### 音ズレの再現
+### 音ズレの再現: No. 1
 
 #### 検証日時
 
-2026/02/19
+2026/02/21
 
 #### 検証環境
 
-- OS: Windows 10 Home (Version 2009, 64-bit)
+- OS: Windows 11 Home (Version 225H2, 64-bit)
 - CPU: AMD Ryzen 7 7800X3D 8-Core Processor
 - RAM: 31.6GB
 - OBS Studio: 32.0.0.4 (64bit)
 
 #### 録音デバイス設定
 
-- デバイス: Logicool C270 HD WebCam (マイク)
+- デバイス: Logicool C920n HD Pro ウェブカメラ (マイク)
 - Windows設定: 48kHz
-- OBS設定: 44.1kHz (サンプリングレート不一致)
-- デバイスタイムスタンプ: 有効
 
 #### 録画ファイル情報
 
-- ファイルパス: production/EP001-obs-audio-sync/2026-02-19_06-58-33.mp4
-- 録画時間: 00:11:22.60
-- ビットレート: 1767 kb/s
-
 映像:
+
 - コーデック: HEVC (H.265 Main)
 - 解像度: 1920x1080
 - フレームレート: 60 fps
-- 映像ビットレート: 769 kb/s
+- 映像ビットレート: 34 kb/s
 - カラースペース: yuv420p (bt709)
 
 音声:
+
 - コーデック: AAC LC
 - サンプリングレート: 44100 Hz (44.1kHz)
 - チャンネル: ステレオ
 - 音声ビットレート: 159 kb/s
 - オーディオトラック数: 6トラック
 
-#### 観察された現象
+### 試験パターン
 
-- サンプリングレート不一致による音ズレが発生
-- デバイス側: 48kHz → OBS側: 44.1kHz でリサンプリング処理
-- 検証目的: サンプリングレート不一致時の音ズレ再現確認
+```yaml
+"1":
+  obs_sampling_rate: 44100
+  timestamping_sync: true
+  file_path: "production/EP001-obs-audio-sync/data/2026-02-21_15-50-22.mp4"
+"2":
+  obs_sampling_rate: 48000
+  timestamping_sync: true
+  file_path: "production/EP001-obs-audio-sync/data/2026-02-21_16-20-02.mp4"
+"3":
+  obs_sampling_rate: 44100
+  timestamping_sync: false
+  file_path: "production/EP001-obs-audio-sync/data/2026-02-21_16-36-22.mp4"
+"4":
+  obs_sampling_rate: 48000
+  timestamping_sync: false
+  file_path: "production/EP001-obs-audio-sync/data/2026-02-21_16-53-50.mp4"
+
+```
+
+### 検証結果
+
+結論から述べると本検証では音声ドリフトが観測されなかった。一時的に1-2フレームのズレは発生するものの、時間経過とともにズレが拡大する現象は確認できなかった。サンプリングレート不一致によるリサンプリング処理が行われていることはファイル情報から確認できるが、OBSの内部処理やWindowsのオーディオスタックの仕様により、音声ドリフトが発生しないようになっている可能性がある。
